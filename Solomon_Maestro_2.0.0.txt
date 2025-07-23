@@ -1,0 +1,267 @@
+# dnabase_core.yaml
+DNABase:
+  [cite_start]version: "2.0.0-tier5-alpha" # Versão atualizada do DNABase [cite: 1]
+  extensoes:
+    - AutoRAGFetcher
+    - PersonaShaper
+    - FeedbackSynthesizer
+    - DynamicModuleLoader
+    - CapabilityMatcher
+    - KnowledgeAssimulator
+    - VectorMemoryManager
+    - [cite_start]static_flow_validator # Adicionado do DNABase [cite: 5]
+    - [cite_start]sandbox_tester # Adicionado do DNABase [cite: 5]
+    - [cite_start]remediation_generator # Adicionado do DNABase [cite: 6]
+    - [cite_start]auto_versioner # Adicionado do DNABase [cite: 8]
+    - [cite_start]EnvironmentalAwarenessModule # Adicionado do DNABase [cite: 6]
+
+# Solomon_Maestro.yaml (Orquestrador Macro)
+agent:
+  name: Solomon_Maestro
+  version: "2.0.0" # Atualizado para refletir o alinhamento com DNABase Tier 5
+  dnabase_version: "2.0.0-tier5-alpha" # Indica que herda do DNABase
+  inherits: "dnabase_core.yaml:DNABase" # Indica que herda do DNABase
+  author: "Cristiano Monteiro Rita"
+  license: "Licença Proprietária"
+  [cite_start]role: "Orquestrador de Maestria e Auto-Aprendizado Cognitivo" # Papel aprimorado [cite: 1]
+  [cite_start]description: "Cérebro operacional multi-agente com autoaprendizado, auditoria, governança proativa e cognição multimodal, operando em Tier 5." [cite: 1]
+  persona:
+    [cite_start]modes: [debug_assistido, minimalista, autoaprendiz, auditor, proativo, preditivo] # Novos modos para Tier 5 [cite: 2]
+
+inputs:
+  [cite_start]agent_inputs: {type: array} [cite: 2]
+  [cite_start]context: {type: json, optional: true} [cite: 2]
+  [cite_start]mode: {type: enum, values: [debug_assistido, minimalista, autoaprendiz, auditor, proativo, preditivo]} # Novos modos [cite: 2]
+  [cite_start]flow_id: {type: string, optional: true} [cite: 2]
+  [cite_start]raw_prompts: {type: array, optional: true} [cite: 2]
+  [cite_start]template_type: {type: string, optional: true} [cite: 2]
+  [cite_start]user_feedback: {type: json, optional: true} [cite: 2]
+  [cite_start]event_stream: {type: array, optional: true} [cite: 2]
+  [cite_start]state_store: {type: json, optional: true} [cite: 2]
+  [cite_start]historical_data: {type: json, optional: true} [cite: 2]
+  # Novos inputs aproveitando o DNABase Tier 5
+  multimodal_data: {type: json, optional: true, description: "Dados de diferentes modalidades para processamento pelo MultimodalSynthesizer."}
+  prediction_target: {type: string, optional: true, description: "Alvo da otimização preditiva."}
+  reconfiguration_trigger: {type: string, optional: true, description: "Gatilho para reconfiguração dinâmica do workflow."}
+
+outputs:
+  [cite_start]global_plan: {type: json} [cite: 9]
+  [cite_start]global_result: {type: json} [cite: 9]
+  [cite_start]learnings: {type: json} [cite: 9]
+  [cite_start]diagnostics: {type: json} [cite: 9]
+  [cite_start]optimized_agent_prompts: {type: array} [cite: 9]
+  [cite_start]new_version: {type: string} [cite: 9]
+  [cite_start]changelog: {type: array} [cite: 9]
+  [cite_start]explainability_tag: {type: json} [cite: 9]
+  # Novos outputs do DNABase Tier 5
+  compliance_report: {type: markdown, description: "Relatório de conformidade da execução (via AutonomousComplianceEngine)."}
+  decision_audit_log: {type: json, description: "Log auditável das decisões tomadas (via DecisionAuditor)."}
+  self_reflection_summary: {type: markdown, description: "Resumo dos insights de auto-reflexão do agente."}
+  environmental_adaptation_report: {type: markdown, description: "Relatório de como o agente se adaptou a mudanças externas."}
+
+modules:
+  - id: triade_orchestrator
+    version: "1.0"
+    in: [agent_inputs]
+    [cite_start]out: [normalized_inputs, internal_plan, aggregated_responses] [cite: 3]
+
+  - id: input_validator
+    version: "1.0"
+    in: [normalized_inputs]
+    [cite_start]out: [validated_inputs] [cite: 3]
+
+  - id: vector_memory_manager
+    version: "1.1"
+    in: [validated_inputs, flow_id]
+    [cite_start]out: [retrieved_memories, memory_status_report] [cite: 3]
+
+  - id: prompt_template_manager
+    version: "1.1"
+    in: [context, template_type]
+    [cite_start]out: [base_template] [cite: 3]
+
+  - id: prompt_refiner
+    version: "1.1"
+    in: [raw_prompts, base_template, updated_models]
+    [cite_start]out: [refined_prompts] [cite: 4]
+
+  - id: prompt_optimizer
+    version: "1.1"
+    in: [refined_prompts, updated_models]
+    [cite_start]out: [optimized_prompts] [cite: 4]
+
+  - id: decision_flow_manager
+    version: "1.0"
+    in: [optimized_prompts, context, aggregated_responses, retrieved_memories]
+    [cite_start]out: [decision_path, branch_scores] [cite: 11]
+
+  - id: policy_evaluator
+    version: "1.0"
+    in: [context, decision_path]
+    [cite_start]out: [policy_outcome, violations] [cite: 11]
+
+  - id: n8n_flow_generator
+    version: "1.0"
+    in: [decision_path, optimized_prompts, retrieved_memories]
+    [cite_start]out: [generated_n8n_flow] [cite: 11]
+
+  - id: sandbox_executor
+    version: "1.0"
+    [cite_start]in: [generated_n8n_flow, validated_inputs] [cite: 5]
+    [cite_start]out: [execution_report, execution_metrics, runtime_trace] [cite: 5]
+
+  - id: resource_cost_optimizer
+    version: "1.0"
+    in: [decision_path, execution_metrics]
+    [cite_start]out: [optimized_plan, cost_estimate] [cite: 5]
+
+  - id: concurrency_manager
+    version: "1.0"
+    in: [optimized_plan]
+    [cite_start]out: [parallel_plan, concurrency_report] [cite: 12]
+
+  - id: event_orchestrator
+    version: "1.0"
+    in: [event_stream, state_store]
+    [cite_start]out: [triggered_flows] [cite: 12]
+
+  - id: transaction_manager
+    version: "1.0"
+    in: [parallel_plan]
+    [cite_start]out: [tx_status, compensating_actions, audit_trail] [cite: 12]
+
+  - id: flow_simulator
+    version: "1.0"
+    [cite_start]in: [optimized_plan, historical_data] [cite: 6]
+    [cite_start]out: [sim_stats, bottleneck_hints] [cite: 6]
+
+  - id: diagnostics_aggregator
+    version: "1.0"
+    in: [execution_report, execution_metrics, self_diagnosis, score_delta,
+         error_classification, recovery_hint, full_runtime_trace_log,
+         concurrency_report, sim_stats, bottleneck_hints, memory_status_report,
+         adaptation_report, policy_outcome, violations, compliance_status, decision_audit_data, self_reflection_data, environmental_awareness_data] # Novos inputs para Tier 5
+    [cite_start]out: [diagnostics] [cite: 13]
+
+  - id: feedback_loop
+    version: "1.2"
+    in: [global_result, diagnostics, user_feedback, validated_inputs]
+    [cite_start]out: [learnings, updated_models] [cite: 6]
+
+  - id: memory_persister
+    version: "1.0"
+    [cite_start]in: [learnings, flow_id] [cite: 7]
+    [cite_start]out: [] [cite: 7]
+
+  - id: agent_self_eval
+    version: "1.2"
+    in: [diagnostics]
+    [cite_start]out: [self_diagnosis, score_delta, improv_recs] [cite: 14]
+
+  - id: runtime_trace_logger
+    version: "1.0"
+    in: [global_plan, tx_status, execution_report, runtime_trace]
+    [cite_start]out: [full_runtime_trace_log] [cite: 14]
+
+  - id: exception_diagnoser
+    version: "1.1"
+    in: [diagnostics, full_runtime_trace_log]
+    [cite_start]out: [error_classification, recovery_hint] [cite: 14]
+
+  - id: explainability_generator
+    version: "1.0"
+    in: [global_plan, audit_trail, learnings,
+         [cite_start]error_classification, recovery_hint, adaptation_report, self_diagnosis] [cite: 15]
+    [cite_start]out: [explainability_tag] [cite: 15]
+
+  - id: adaptive_module_loader
+    version: "1.1"
+    in: [context, learnings, improv_recs]
+    [cite_start]out: [loaded_modules, adaptation_report] [cite: 15]
+
+  - id: auto_versioner
+    version: "1.0"
+    in: [learnings]
+    [cite_start]out: [new_version, changelog] [cite: 15]
+
+  # Novos módulos herdados do DNABase 2.0.0-tier5-alpha ou customizados para o Solomon
+  - id: multimodal_synthesizer # Herdado do DNABase
+    version: "1.0"
+    in: [multimodal_data]
+    out: [synthesized_multimodal_insights]
+
+  - id: predictive_optimizer # Herdado do DNABase
+    version: "1.0"
+    in: [optimized_plan, historical_data, prediction_target]
+    out: [predicted_optimizations, predictive_insights]
+
+  - id: dynamic_workflow_reconfigurator # Herdado do DNABase
+    version: "1.0"
+    in: [reconfiguration_trigger, diagnostics, learnings]
+    out: [reconfigured_workflow_plan]
+
+  - id: self_reflection_module # Herdado do DNABase
+    version: "1.0"
+    in: [diagnostics, global_result]
+    out: [self_reflection_data]
+
+  - id: autonomous_compliance_engine # Herdado do DNABase
+    version: "1.0"
+    in: [decision_path, policy_outcome, violations]
+    out: [compliance_status, compliance_report]
+
+  - id: decision_auditor # Herdado do DNABase
+    version: "1.0"
+    in: [decision_path, global_result]
+    out: [decision_audit_data, decision_audit_log]
+
+  - id: environmental_awareness_module # Herdado do DNABase
+    version: "1.0"
+    in: [event_stream, external_context] # Adicionar 'external_context' se necessário
+    out: [environmental_awareness_data, environmental_adaptation_report]
+
+orchestration:
+  type: blueprint-driven
+  parallel_execution: true
+  error_handling:
+    [cite_start]on_module_error: continue [cite: 8]
+    [cite_start]notify: "devops@empresa.com" [cite: 8]
+  steps:
+    - [cite_start]triade_orchestrator [cite: 8]
+    - [cite_start]input_validator [cite: 9]
+    - multimodal_synthesizer: {if: multimodal_data} # NOVO PASSO
+    - environmental_awareness_module: {if: event_stream} # NOVO PASSO
+    - [cite_start]vector_memory_manager [cite: 9]
+    - [cite_start]prompt_template_manager: {if: template_type} [cite: 16]
+    - [cite_start]prompt_refiner: {if: raw_prompts} [cite: 16]
+    - [cite_start]prompt_optimizer: {if: refined_prompts} [cite: 16]
+    - [cite_start]decision_flow_manager [cite: 16]
+    - [cite_start]policy_evaluator [cite: 16]
+    - autonomous_compliance_engine # NOVO PASSO
+    - decision_auditor # NOVO PASSO
+    - [cite_start]n8n_flow_generator [cite: 16]
+    - [cite_start]sandbox_executor: {if: generated_n8n_flow} [cite: 16]
+    - [cite_start]resource_cost_optimizer [cite: 16]
+    - predictive_optimizer: {if: prediction_target} # NOVO PASSO
+    - dynamic_workflow_reconfigurator: {if: reconfiguration_trigger} # NOVO PASSO
+    - [cite_start]concurrency_manager [cite: 16]
+    - [cite_start]event_orchestrator: {if: event_stream} [cite: 16]
+    - [cite_start]transaction_manager [cite: 16]
+    - [cite_start]flow_simulator: {if: historical_data} [cite: 16]
+    - [cite_start]runtime_trace_logger [cite: 16]
+    - [cite_start]diagnostics_aggregator [cite: 17]
+    - self_reflection_module # NOVO PASSO
+    - [cite_start]feedback_loop: {if: mode=='autoaprendiz'} [cite: 17]
+    - [cite_start]memory_persister: {if: learnings} [cite: 17]
+    - [cite_start]agent_self_eval [cite: 17]
+    - [cite_start]exception_diagnoser [cite: 17]
+    - [cite_start]explainability_generator [cite: 17]
+    - [cite_start]adaptive_module_loader: {if: learnings} [cite: 17]
+    - [cite_start]auto_versioner [cite: 17]
+
+backend:
+  [cite_start]vector_store: "redis://localhost:6379" [cite: 17]
+  [cite_start]policy_engine: "OPA" [cite: 17]
+  [cite_start]observability: "Prometheus/OpenTelemetry" [cite: 17]
+  [cite_start]telemetry: true [cite: 17]
+  [cite_start]sandbox_env: "docker-n8n-sandbox" [cite: 17]
